@@ -16,7 +16,7 @@ def classify0(inX, dataSet, labels, k):
     for i in range(k):
         voteIlabel = labels[sortedDistIndicies[i]]
         classCount[voteIlabel] = classCount.get(voteIlabel, 0) + 1 #classCount.get(voteIlabel, 0)指定的key如果不在字典里，设为0
-    # 排序
+    # 排序，按索引为1的元素倒序
     sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
@@ -28,14 +28,14 @@ def createDataSet():
 
 
 def file2matrix(filename):
-    fr = open(filename)
-    numberOfLines = len(fr.readlines())  # get the number of lines in the file
-    returnMat = zeros((numberOfLines, 3))  # prepare matrix to return
+    fr = open(filename,'r',encoding='utf-8')
+    numberOfLines = len(fr.readlines())  # 得到文件行数
+    returnMat = zeros((numberOfLines, 3))  # 创建返回的numpy矩阵
     classLabelVector = []  # prepare labels return
-    fr = open(filename)
+    fr.seek(0,0)#指定开始读取的位置指针
     index = 0
     for line in fr.readlines():
-        line = line.strip()
+        line = line.strip() #strip()的参数为空，那么会默认删除字符串头和尾的空白字符(包括\n，\r，\t这些)
         listFromLine = line.split('\t')
         returnMat[index, :] = listFromLine[0:3]
         classLabelVector.append(int(listFromLine[-1]))
