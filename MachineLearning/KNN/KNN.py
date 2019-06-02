@@ -40,6 +40,7 @@ def file2matrix(filename):
         returnMat[index, :] = listFromLine[0:3]
         classLabelVector.append(int(listFromLine[-1]))
         index += 1
+    fr.close()
     return returnMat, classLabelVector
 
 
